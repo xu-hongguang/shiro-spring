@@ -20,20 +20,20 @@ public class RoleDAOImpl implements IRoleDAO {
     private JdbcTemplate template;
 
     @Autowired
-    private void setDataSource(DataSource dataSource){
+    private void setDataSource(DataSource dataSource) {
         this.template = new JdbcTemplate(dataSource);
     }
 
     @Override
     public List<String> getAllRoleSn() {
-        try{
+        try {
             return template.query("select * from role", new RowMapper<String>() {
                 @Override
                 public String mapRow(ResultSet rs, int rowNum) throws SQLException {
                     return rs.getString("sn");
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ArrayList<>();
@@ -42,16 +42,16 @@ public class RoleDAOImpl implements IRoleDAO {
     @Override
     public List<String> getRoleSnByUserId(Long userId) {
         String sql = "select sn from role where id in (select role_id from user_role where user_id = ?)";
-        try{
+        try {
             return template.query(sql, new RowMapper<String>() {
                 @Override
                 public String mapRow(ResultSet rs, int rowNum) throws SQLException {
                     return rs.getString("sn");
                 }
             }, userId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-            return new ArrayList<>();
-        }
+        return new ArrayList<>();
+    }
 }

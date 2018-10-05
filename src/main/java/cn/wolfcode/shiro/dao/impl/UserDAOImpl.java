@@ -34,7 +34,7 @@ public class UserDAOImpl implements IUserDAO {
                 user.setPassword(rs.getString("password"));
                 return user;
             }, username);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
